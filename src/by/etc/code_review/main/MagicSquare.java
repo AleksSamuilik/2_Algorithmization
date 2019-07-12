@@ -1,39 +1,31 @@
 package by.etc.code_review.main;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class MagicSquare {
     private int[][] arrayOfArrays;
 
-    public static String readUserInput() {
-        System.out.println("Enter the size of the magic square: ");
+    public static int readUserInput() {
+        System.out.println("Enter the size of the magic square from 2: ");
         Scanner scanner = new Scanner(System.in);
-        String sizeSquare = "";
-        boolean valid;
-        do {
-            valid = false;
-            String number = scanner.nextLine();
-            for (int i = 0; i < number.length(); i++) {
-                char digit = number.charAt(i);
-                if (Character.isSpaceChar(digit)) {
-                    continue;
-                } else if (Character.isDigit(digit)) {
-                    sizeSquare += Character.toString(digit);
-                } else {
-                    sizeSquare = "";
-                    System.out.println("Sorry. Try again");
-                    valid = true;
-                    break;
-                }
+        int sizeSquare = 0;
+        while (true){
+            try {
+               sizeSquare = Integer.parseInt(scanner.nextLine());
+               if (sizeSquare>2){
+                   return sizeSquare;
+               } else {
+                   throw new  RuntimeException();
+               }
+            } catch (RuntimeException e){
+                System.out.println("Try again.");
             }
-        } while (valid);
-        return sizeSquare;
+        }
     }
 
     public static void main(String[] args) {
         long start = System.currentTimeMillis();// проверим за какое время проходит создание магического квадрата.
-        int digit = Integer.parseInt(readUserInput());
+        int digit =readUserInput();
         MagicSquare magicSquare = new MagicSquare();
         magicSquare.start(digit);
         long elapsedTimeMillis = System.currentTimeMillis() - start;
@@ -68,17 +60,21 @@ public class MagicSquare {
         return true;
     }
 
-    private void print(int[][] array) { // вывод Массива
-        for (int i = 0; i < array.length; i++) {
-            System.out.println(Arrays.toString(array[i]));
+    private void print() { // вывод Массива
+        for (int i = 0; i < arrayOfArrays.length; i++) {
+            for (int j = 0; j < arrayOfArrays[i].length; j++) {
+                System.out.print(arrayOfArrays[i][j]+" ");
+            }
+            System.out.println();
         }
+        System.out.println();
     }
 
-    private int start(int digit) {
+    public int start(int digit) {
         int[] array;
         int sizeNumbers = (int) Math.pow(digit, 2);
         array = new int[sizeNumbers];
-        arrayOfArrays = new int[sizeNumbers][sizeNumbers];
+        arrayOfArrays = new int[digit][digit];
         for (int i = 0; i < sizeNumbers; i++) {
             array[i] = i + 1;
         }
@@ -88,7 +84,7 @@ public class MagicSquare {
         while (nextSet(array, sizeNumbers)) {
             if (checkSum(array, digit)) {
                 createArrayOfArrays(array);
-                print(arrayOfArrays);
+                print();
             }
         }
         return 0;
