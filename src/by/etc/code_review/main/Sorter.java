@@ -53,7 +53,7 @@ public class Sorter {
             int buf = array[i];
             int index = binSearch(array, 0, i, array[i]);
             for (int j = i - 1; j >= index; j--) {
-                if (array[j] > buf) {
+                if (array[j] < buf) {
                     break;
                 }
                 array[j + 1] = array[j];
@@ -68,14 +68,30 @@ public class Sorter {
             int mid = low + (high - low) / 2;
             Comparable midVal = array[mid];
             int cmp = midVal.compareTo(key);
-            if (cmp > 0)
+            if (cmp < 0)
                 low = mid + 1;
-            else if (cmp < 0)
+            else if (cmp > 0)
                 high = mid - 1;
             else
                 return mid;
         }
         return low;
+    }
+
+    public void shellSort(int n, int[] array) {
+        int i, j, step;
+        int tmp;
+        for (step = n / 2; step > 0; step /= 2)
+            for (i = step; i < n; i++) {
+                tmp = array[i];
+                for (j = i; j >= step; j -= step) {
+                    if (tmp < array[j - step])
+                        array[j] = array[j - step];
+                    else
+                        break;
+                }
+                array[j] = tmp;
+            }
     }
 
 

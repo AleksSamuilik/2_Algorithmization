@@ -390,21 +390,17 @@ public class Algorithmization2 {
         }
 
         //5. Сформировать квадратную матрицу порядка n по заданному образцу(n - четное):
-        //
-        //
-        //
-        //
-        //
-        //ПЕРЕСМОТРЕТЬ
-
-
         System.out.println("Task 5 array of arrays: ");
         int sizeOrder5 = 14;
         if (sizeOrder5 % 2 == 0) {
             int[][] arrayArrays5 = new int[sizeOrder5][sizeOrder5];
             for (int i = 0; i < arrayArrays5.length; i++) {
                 for (int j = 0; j < arrayArrays5[i].length; j++) {
-                    arrayArrays5[i][j] = i + 1;
+                    if (j >= sizeOrder5 - i) {
+                        arrayArrays5[i][j] = 0;
+                    } else {
+                        arrayArrays5[i][j] = i + 1;
+                    }
                 }
             }
             printArrayOfArrays(arrayArrays5);
@@ -687,6 +683,7 @@ public class Algorithmization2 {
         System.out.println("Task 3 One-dimensional arrays Sorting: ");
         Sorter sorter = new Sorter();
         int[] arrayTaskSorting3 = {2, 3, 5, 7, 9, 12, 15, 20, 25};
+        sorter.selectionSort(arrayTaskSorting3);
         System.out.println(Arrays.toString(arrayTaskSorting3));
         System.out.println();
 
@@ -711,5 +708,56 @@ public class Algorithmization2 {
         int[] arrayTaskSorting5 = {7, 6, 14, 8, 16, 9, 13, 15, 2, 1, 12, 4, 3, 11, 5, 10};
         sorter.insertionBinarySort(arrayTaskSorting5);
         System.out.println(Arrays.toString(arrayTaskSorting5));
+        System.out.println();
+
+        /* 6. Сортировка  Шелла.  Дан  массив  n  действительных  чисел.  Требуется  упорядочить  его  по  возрастанию.
+Делается это следующим образом: сравниваются два соседних элемента ai и ai+1. Если ai<=ai+1, то продвигаются
+на  один  элемент  вперед.  Если ai>ai+1, то  производится  перестановка  и  сдвигаются  на  один  элемент  назад.
+Составить алгоритм этой сортировки. */
+        System.out.println("Task 6 One-dimensional arrays Sorting: ");
+        int[] arrayTaskSorting6 = {7, 6, 14, 8, 16, 9, 13, 15, 2, 1, 12, 4, 3, 11, 5, 10};
+        sorter.shellSort(arrayTaskSorting6.length, arrayTaskSorting6);
+        System.out.println(Arrays.toString(arrayTaskSorting6));
+        System.out.println();
+       /* 7.  Пусть  даны  две  неубывающие  последовательности  действительных  чисел ai<an и bi<bn    Требуется указать те места,
+        на которые нужно вставлять элементы последовательности bi<bn в первую последовательность так, чтобы новая последовательность оставалась возрастающей. */
+        System.out.println("Task 7 One-dimensional arrays Sorting: ");
+        int[] arrayTaskSorting7_1 = {4, 7, 8, 10, 12, 13, 17, 20};
+        int[] arrayTaskSorting7_2 = {1, 2, 3, 5, 6, 9, 14, 18};
+        count = 0;
+        int countIndexFirstArray7 = 0;
+        int countIndexSecondArray7 = 0;
+        int[] tmp7 = new int[arrayTaskSorting7_1.length + arrayTaskSorting7_2.length];
+        while (count != tmp7.length) {
+            if (countIndexSecondArray7 < arrayTaskSorting7_2.length && countIndexFirstArray7 < arrayTaskSorting7_1.length) {
+                indexInsert = sorter.binSearch(arrayTaskSorting7_1, 0, arrayTaskSorting7_1.length, arrayTaskSorting7_2[countIndexSecondArray7]);
+
+                if (indexInsert <= countIndexFirstArray7) {
+                    tmp7[count] = arrayTaskSorting7_2[countIndexSecondArray7++];
+                } else {
+                    tmp7[count] = arrayTaskSorting7_1[countIndexFirstArray7++];
+                }
+                count++;
+            } else {
+                if (countIndexFirstArray7 != arrayTaskSorting7_1.length) {
+                    for (int i = countIndexFirstArray7; i < arrayTaskSorting7_1.length; i++) {
+                        tmp7[count++] = arrayTaskSorting7_1[i];
+                    }
+                } else {
+                    for (int i = countIndexSecondArray7; i < arrayTaskSorting7_2.length; i++) {
+                        tmp7[count++] = arrayTaskSorting7_2[i];
+                    }
+                }
+            }
+        }
+        arrayTaskSorting7_1 = tmp7;
+        System.out.println(Arrays.toString(arrayTaskSorting7_1));
+        System.out.println();
+
+       /* 8.Даны дроби -  натуральные). Составить программу, которая приводит эти дроби к общему
+        знаменателю и упорядочивает их в порядке возрастания. */
+        System.out.println("Task 8 One-dimensional arrays Sorting: ");
+
+
     }
 }
